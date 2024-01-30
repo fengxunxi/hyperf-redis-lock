@@ -16,7 +16,7 @@ version 1.* supports all the versions of redis.
 `redis-server --version`
 
 ## Install
-Run `composer require lysice/hyperf-redis-lock`
+Run `composer require fengxunxi/hyperf-redis-lock`
 
 ## Usage
 init the `redis` object
