@@ -100,7 +100,7 @@ abstract class Lock implements LockContract
                 $res = $callback();
                 $end = microtime(true);
                 $leftMs = $gapMs - intval(($end - $start) * 1000);
-                if($gapMs > 0 &&  $leftMs > 0) {
+                if($gapMs > 0 && $leftMs > 0) {
                     usleep($leftMs * 1000);
                 }
                 return $res;
