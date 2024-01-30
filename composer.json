@@ -1,5 +1,5 @@
 {
-    "name": "lysice/hyperf-redis-lock",
+    "name": "fengxunxi/hyperf-redis-lock",
     "type": "library",
     "license": "MIT",
     "keywords": [
@@ -9,7 +9,7 @@
     "description": "",
     "autoload": {
         "psr-4": {
-            "Lysice\\HyperfRedisLock\\": "src/"
+            "Fengxunxi\\HyperfRedisLock\\": "src/"
         }
     },
     "autoload-dev": {
@@ -42,7 +42,7 @@
     },
     "extra": {
         "hyperf": {
-            "config": "Lysice\\HyperfRedisLock\\ConfigProvider"
+            "config": "Fengxunxi\\HyperfRedisLock\\ConfigProvider"
         }
     }
 }
