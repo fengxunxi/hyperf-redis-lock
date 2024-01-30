@@ -11,7 +11,7 @@ declare(strict_types=1);
  */
 namespace HyperfTest\Cases;
 
-use Lysice\HyperfRedisLock\RedisLock;
+use Fengxunxi\HyperfRedisLock\RedisLock;
 use Swoole\Coroutine\Redis;
 
 /**

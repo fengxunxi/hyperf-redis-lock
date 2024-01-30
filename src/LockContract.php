@@ -1,6 +1,6 @@
 <?php
 
-namespace Lysice\HyperfRedisLock;
+namespace Fengxunxi\HyperfRedisLock;
 
 interface LockContract {
     /**
