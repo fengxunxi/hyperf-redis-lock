@@ -79,12 +79,14 @@ abstract class Lock implements LockContract
 
     /**
      * @param $seconds
-     * @param null $callback
+     * @param callable | null $callback
+     * @param int $gapMs call gap millisecond
      * @return bool|mixed
      * @throws LockTimeoutException
      */
-    public function block($seconds, $callback = null)
+    public function block($seconds, $callback = null, $gapMs = 0)
     {
+        $start = microtime(true);
         $starting = $this->currentTime();
         while(! $this->acquire()) {
            usleep(250 * 1000);
@@ -95,7 +97,13 @@ abstract class Lock implements LockContract
 
         if(is_callable($callback)) {
             try {
-                return $callback();
+                $res = $callback();
+                $end = microtime(true);
+                $leftMs = $gapMs - intval(($end - $start) * 1000);
+                if($gapMs > 0 &&  $leftMs > 0) {
+                    usleep($leftMs * 1000);
+                }
+                return $res;
             } finally {
                 $this->release();
             }
