@@ -4,6 +4,7 @@ namespace Lysice\HyperfRedisLock;
 
 use Hyperf\Utils\Str;
 use Hyperf\Utils\InteractsWithTime;
+use Swow\Log;
 
 abstract class Lock implements LockContract
 {
@@ -88,11 +89,13 @@ abstract class Lock implements LockContract
     {
         $start = microtime(true);
         $starting = $this->currentTime();
-        while(! $this->acquire()) {
-           usleep(250 * 1000);
-           if($this->currentTime() - $seconds >= $starting) {
-               throw new LockTimeoutException();
-           }
+        while (!$this->acquire()) {
+            $sleepMs = 250;
+            logger()->info(sprintf(__METHOD__ . ' not get lock:%s sleep %dms', $this->name, $sleepMs));
+            usleep($sleepMs * 1000);
+            if ($this->currentTime() - $seconds >= $starting) {
+                throw new LockTimeoutException();
+            }
         }
 
         if(is_callable($callback)) {
@@ -101,6 +104,7 @@ abstract class Lock implements LockContract
                 $end = microtime(true);
                 $leftMs = $gapMs - intval(($end - $start) * 1000);
                 if($gapMs > 0 && $leftMs > 0) {
+                    logger()->info(sprintf(__METHOD__ . ' exec too fast lock:%s need sleep %dms', $this->name, $leftMs));
                     usleep($leftMs * 1000);
                 }
                 return $res;
