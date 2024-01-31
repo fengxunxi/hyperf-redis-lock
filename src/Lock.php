@@ -4,7 +4,6 @@ namespace Lysice\HyperfRedisLock;
 
 use Hyperf\Utils\Str;
 use Hyperf\Utils\InteractsWithTime;
-use Swow\Log;
 
 abstract class Lock implements LockContract
 {
